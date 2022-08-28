@@ -4,11 +4,13 @@ const TOPICS = {
   ROOM: "room_",
 };
 
+const API = "https://inventory.proj.vts.su.ac.rs/inventory/api"
+
 const query = async ({ token = "", input }) => {
   const { got } = await import("got");
 
   const { result } = await got
-    .post("http://localhost/inventory/api", {
+    .post(API, {
       json: {
         ...input,
       },
@@ -33,23 +35,14 @@ const resolvers = {
 
       return equipment;
     },
-    async login(_, { data }) {
-      const { got } = await import("got");
-
-      const { result } = await got
-        .post("http://localhost/inventory/api", {
-          json: {
+    async login(_, { data }) {      
+      const result = await query({
+        input: {
             type: "user",
             action: "login",
             input: data,
           },
-          headers: {
-            Cookie: {
-              PHPSESSID: "i523r6lsc6p8s1iv76uca123ft",
-            },
-          },
-        })
-        .json();
+      });
 
       return { message: result.message, type: result.type };
     },
