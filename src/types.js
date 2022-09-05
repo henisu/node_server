@@ -4,11 +4,12 @@ const typeDefs = gql`
   type EquipmentResponse {
     name: String
     inventory_number: String
-    id: String
+    id: Int
     category: String
     faulty: String
     faulty_id: Int
     inventory_id: Int
+    images: [String]
   }
 
   type RoomResponse {
@@ -18,7 +19,7 @@ const typeDefs = gql`
   }
 
   type AssignmentResponse {
-    id: ID
+    id: Int
     date: String
     location_name: String
   }
@@ -31,7 +32,7 @@ const typeDefs = gql`
   type Query {
     initialData: InitialDataResponse
     room(room: String): [EquipmentResponse]
-    scan(id: String, roomID: Int): EquipmentResponse
+    scan(id: Int, roomID: Int): EquipmentResponse
   }
 
   type Subscription {
@@ -49,6 +50,7 @@ const typeDefs = gql`
     equipment_id: Int
     user_id: Int
     location_id: Int
+    images: [String]
   }
 
   input LoginInput {
@@ -68,6 +70,7 @@ const typeDefs = gql`
 
   type Mutation {
     updateInventory(data: InventoryInput!): EquipmentResponse
+    removeInventory(data: InventoryInput!): EquipmentResponse
     login(data: LoginInput!): Response
   }
 `;

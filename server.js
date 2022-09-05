@@ -11,12 +11,8 @@ const { resolvers } = require("./src/resolvers");
 
 const PORT = 4000;
 
-// Create schema, which will be used separately by ApolloServer and
-// the WebSocket server.
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 
-// Create an Express app and HTTP server; we will attach the WebSocket
-// server and the ApolloServer to this HTTP server.
 const app = express();
 const httpServer = createServer(app);
 
@@ -76,9 +72,6 @@ const init = async () => {
     );
   });
 
-//   httpServer.on("request", ({ headers }) => {
-//     console.log("REQUEST", headers);
-//   });
 };
 
 init();

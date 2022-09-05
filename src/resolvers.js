@@ -4,7 +4,8 @@ const TOPICS = {
   ROOM: "room_",
 };
 
-const API = "https://inventory.proj.vts.su.ac.rs/inventory/api"
+const API = "https://inventory.proj.vts.su.ac.rs/inventory/api";
+// const API = "http://localhost/inventory/api";
 
 const query = async ({ token = "", input }) => {
   const { got } = await import("got");
@@ -27,7 +28,18 @@ const resolvers = {
   Mutation: {
     async updateInventory(_, { data }, { token }) {
       const { equipment } = await query({
-        input: { type: "entry", action: "updateEquipment", input: data },
+        input: { type: "entry", action: "updateInventory", input: data },
+        token,
+      });
+
+      equipment.images = equipment.images.split(";");
+      pubsub.publish(TOPICS.ROOM + equipment.location_id, { room: equipment });
+
+      return equipment;
+    },
+    async removeInventory(_, { data }, { token }) {
+      const { equipment } = await query({
+        input: { type: "entry", action: "removeInventory", input: data },
         token,
       });
 
@@ -35,13 +47,13 @@ const resolvers = {
 
       return equipment;
     },
-    async login(_, { data }) {      
+    async login(_, { data }) {
       const result = await query({
         input: {
-            type: "user",
-            action: "login",
-            input: data,
-          },
+          type: "user",
+          action: "login",
+          input: data,
+        },
       });
 
       return { message: result.message, type: result.type };
@@ -64,7 +76,7 @@ const resolvers = {
     },
     async room(_, { room }, { token }) {
       const rooms = await query({
-        input: { type: "entry", action: "rooms", input: { room } },
+        input: { type: "entry", action: "rooms", input: { room: room.trim() } },
         token,
       });
 
