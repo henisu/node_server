@@ -9,7 +9,7 @@ const typeDefs = gql`
     faulty: String
     faulty_id: Int
     inventory_id: Int
-    images: [String]
+    images: String
   }
 
   type RoomResponse {
