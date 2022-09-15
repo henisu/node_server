@@ -32,7 +32,6 @@ const resolvers = {
         token,
       });
 
-      equipment.images = equipment.images.split(";");
       pubsub.publish(TOPICS.ROOM + equipment.location_id, { room: equipment });
 
       return equipment;
