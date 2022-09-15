@@ -51,11 +51,11 @@ const resolvers = {
         input: {
           type: "user",
           action: "login",
-          input: data,
+          input: { ...data, app: true },
         },
       });
 
-      return { message: result.message, type: result.type };
+      return { ...JSON.parse(result.message) };
     },
   },
   Query: {

@@ -63,15 +63,22 @@ const typeDefs = gql`
     success
   }
 
-  type Response {
-    message: String
-    type: ResponseTypes
+  type UserResponse {
+    firstname: String
+    lastname: String
+    email: String
+    phone: String
+  }
+
+  type LoginResponse {
+    user: UserResponse
+    token: String
   }
 
   type Mutation {
     updateInventory(data: InventoryInput!): EquipmentResponse
     removeInventory(data: InventoryInput!): EquipmentResponse
-    login(data: LoginInput!): Response
+    login(data: LoginInput!): LoginResponse
   }
 `;
 
