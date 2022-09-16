@@ -48,7 +48,6 @@ const typeDefs = gql`
     inventory_id: Int
     faulty: FaultyInput
     equipment_id: Int
-    user_id: Int
     location_id: Int
     images: [String]
   }

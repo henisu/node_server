@@ -75,7 +75,7 @@ const resolvers = {
     },
     async room(_, { room }, { token }) {
       const rooms = await query({
-        input: { type: "entry", action: "rooms", input: { room: room.trim() } },
+        input: { type: "entry", action: "rooms", input: { room } },
         token,
       });
 
