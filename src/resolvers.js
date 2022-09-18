@@ -92,10 +92,7 @@ const resolvers = {
   },
   Subscription: {
     room: {
-      subscribe: (_, { roomID }) => {
-        console.log("SUBSCRIBED TO THE ROOM: ", roomID);
-        return pubsub.asyncIterator(TOPICS.ROOM + roomID);
-      },
+      subscribe: (_, { roomID }) => pubsub.asyncIterator(TOPICS.ROOM + roomID),
     },
   },
 };
